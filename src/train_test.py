@@ -51,13 +51,13 @@ class SplitTrainTest:
         return rmse_dict
 
     def plot_rmse(self, rmse_dict, save_path='outputs/figures/rmse_by_stage.png'):
-        """Draw a bar chart comparing the test RMSE of each model stage.
+        """Draw a compact bar chart comparing the test RMSE of each model stage.
 
         Lower RMSE means the model's predictions are closer to the real
         ride counts, so the shortest bar is the best stage.
         """
-        # Turn names like 'Fully_engineered' into 'Fully engineered'
-        stages = [name.replace('_', ' ') for name in rmse_dict]
+        # 'Fully_engineered' -> 'Fully\nengineered' (two lines, so no tilted labels)
+        stages = [name.replace('_', '\n') for name in rmse_dict]
         scores = list(rmse_dict.values())
 
         # Highlight the best (lowest) score in a different color
@@ -65,25 +65,24 @@ class SplitTrainTest:
         colors = ['#4C72B0'] * len(scores)
         colors[best] = '#2E8B57'
 
-        fig, ax = plt.subplots(figsize=(9, 5.6))
-        bars = ax.bar(stages, scores, color=colors, width=0.6)
-        ax.bar_label(bars, fmt='%.1f', padding=3, fontsize=11)
+        fig, ax = plt.subplots(figsize=(6, 3.6))
+        bars = ax.bar(stages, scores, color=colors, width=0.55)
+        ax.bar_label(bars, fmt='%.0f', padding=2, fontsize=9)
 
-        ax.set_title('Bike Ride Demand: Model Error by Data Stage', fontsize=14, fontweight='bold')
-        ax.set_xlabel('Data preparation stage', fontsize=12)
-        ax.set_ylabel('Test RMSE (rides per hour, lower is better)', fontsize=12)
-        ax.set_ylim(0, max(scores) * 1.15)
+        ax.set_title('Model error by data stage', fontsize=11, fontweight='bold')
+        ax.set_ylabel('Test RMSE (lower is better)', fontsize=9)
+        ax.set_ylim(0, max(scores) * 1.12)
+        ax.tick_params(labelsize=9)
         ax.grid(axis='y', alpha=0.3)
         ax.set_axisbelow(True)
 
         for side in ('top', 'right'):
             ax.spines[side].set_visible(False)
 
-        plt.xticks(rotation=15)
         plt.tight_layout()
 
         Path(save_path).parent.mkdir(parents=True, exist_ok=True)
-        plt.savefig(save_path, dpi=200, bbox_inches='tight')
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
         plt.show()
 
 
