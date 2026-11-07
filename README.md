@@ -145,28 +145,6 @@ pip install -r requirements.txt
 | `weather_code` | Category of weather conditions (codes below) |
 | `season` | Meteorological season (codes below) |
 
-**weather_code**: Category of weather conditions.
-
-| Code | Meaning |
-|------|---------|
-| 1 | Clear; mostly clear but may have some values with haze/fog/patches of fog/fog in vicinity |
-| 2 | Scattered clouds/few clouds |
-| 3 | Broken clouds |
-| 4 | Cloudy |
-| 7 | Rain/light rain shower/light rain |
-| 10 | Rain with thunderstorm |
-| 26 | Snowfall |
-| 94 | Freezing fog |
-
-**season**: Categorical field indicating meteorological seasons.
-
-| Code | Meaning |
-|------|---------|
-| 0 | Spring |
-| 1 | Summer |
-| 2 | Fall |
-| 3 | Winter |
-
 ### Engineered features
 
 | Feature | How it is built |
